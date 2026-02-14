@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>КомпасБуд - Анкета партнера</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#08111F;--deep:#0F1F38;--mid:#1A3254;--rim:#243F68;
+  --gold:#C8A44A;--gold2:#E8C76A;--gold3:#8A6820;
+  --cream:#FDF6E3;--white:#FFFFFF;
+  --muted:rgba(255,255,255,.45);--faint:rgba(255,255,255,.08);
+  --border:rgba(200,164,74,.22);--green:#12A05C;--red:#E05252;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Outfit',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--ink);color:var(--white);min-height:100dvh;overflow-x:hidden}
+
+.bg{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse 80% 60% at 15% 10%,rgba(200,164,74,.10) 0%,transparent 60%),radial-gradient(ellipse 60% 80% at 85% 80%,rgba(37,99,235,.08) 0%,transparent 60%),linear-gradient(165deg,var(--ink) 0%,var(--deep) 50%,#091828 100%)}
+.bg-grid{position:fixed;inset:0;z-index:0;background-image:linear-gradient(rgba(200,164,74,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(200,164,74,.04) 1px,transparent 1px);background-size:40px 40px}
+
+.wrap{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:0 16px 60px;display:flex;flex-direction:column}
+
+.hero{padding:44px 0 32px;text-align:center;animation:fadeDown .7s ease both}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:translateY(0)}}
+.logo-ring{width:76px;height:76px;border-radius:22px;background:linear-gradient(135deg,var(--gold),var(--gold3));display:inline-flex;align-items:center;justify-content:center;font-size:36px;margin-bottom:18px;box-shadow:0 0 0 1px var(--border),0 12px 40px rgba(200,164,74,.35);animation:floatLogo 4s ease-in-out infinite}
+@keyframes floatLogo{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-6px) rotate(1.5deg)}}
+.hero-tag{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border);border-radius:99px;padding:4px 14px;font-size:11px;font-weight:500;color:var(--gold);letter-spacing:.8px;text-transform:uppercase;margin-bottom:14px;background:rgba(200,164,74,.07)}
+.hero h1{font-family:var(--serif);font-size:clamp(26px,7vw,36px);font-weight:600;line-height:1.15;color:var(--white);margin-bottom:10px}
+.hero h1 em{font-style:italic;background:linear-gradient(135deg,var(--gold2),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:14px;color:var(--muted);line-height:1.7;max-width:340px;margin:0 auto 20px}
+.hero-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.pill{background:var(--faint);border:1px solid rgba(255,255,255,.1);border-radius:99px;padding:5px 13px;font-size:12px;color:var(--muted);display:flex;align-items:center;gap:5px}
+
+.stepper{display:flex;align-items:center;margin:0 0 24px;position:relative;animation:fadeDown .7s .1s ease both}
+.step-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;position:relative}
+.step-item:not(:last-child)::after{content:'';position:absolute;top:15px;left:50%;width:100%;height:1px;background:var(--border);z-index:0}
+.step-item.done::after{background:var(--gold)}
+.step-circle{width:30px;height:30px;border-radius:99px;z-index:1;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;transition:all .3s ease;border:1.5px solid rgba(255,255,255,.15);background:var(--deep);color:var(--muted)}
+.step-item.active .step-circle{background:linear-gradient(135deg,var(--gold),var(--gold3));border-color:var(--gold);color:var(--ink);box-shadow:0 0 16px rgba(200,164,74,.4)}
+.step-item.done .step-circle{background:var(--green);border-color:var(--green);color:white}
+.step-label{font-size:9px;color:var(--muted);font-weight:500;text-align:center;letter-spacing:.3px}
+.step-item.active .step-label{color:var(--gold)}
+.step-item.done .step-label{color:var(--green)}
+
+.card{background:linear-gradient(145deg,rgba(26,50,84,.9),rgba(15,31,56,.95));border:1px solid var(--border);border-radius:24px;padding:26px 22px;backdrop-filter:blur(20px);box-shadow:0 24px 60px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.06);animation:stepIn .35s ease both}
+@keyframes stepIn{from{opacity:0;transform:translateX(20px) scale(.98)}to{opacity:1;transform:translateX(0) scale(1)}}
+.card-num{font-size:10px;font-weight:700;letter-spacing:.8px;color:var(--gold);text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.card-num::before{content:'';display:block;width:20px;height:1px;background:var(--gold)}
+.card-head{margin-bottom:22px}
+.card-head h2{font-family:var(--serif);font-size:22px;font-weight:600;color:var(--white);line-height:1.2;margin-bottom:4px}
+.card-head p{font-size:13px;color:var(--muted);line-height:1.5}
+
+.field{margin-bottom:16px;position:relative}
+.field:last-child{margin-bottom:0}
+.fl-wrap{position:relative}
+.fl-input,.fl-select,.fl-textarea{width:100%;background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.12);border-radius:12px;padding:18px 16px 8px;font-family:var(--sans);font-size:15px;color:var(--white);outline:none;transition:border-color .25s,background .25s,box-shadow .25s;-webkit-appearance:none}
+.fl-label{position:absolute;top:50%;left:16px;transform:translateY(-50%);font-size:14px;color:var(--muted);font-weight:400;pointer-events:none;transition:all .2s cubic-bezier(.4,0,.2,1)}
+.fl-input:focus~.fl-label,.fl-input:not(:placeholder-shown)~.fl-label,.fl-select:focus~.fl-label,.fl-select.has-value~.fl-label{top:10px;font-size:10px;font-weight:600;color:var(--gold);letter-spacing:.3px;text-transform:uppercase;transform:translateY(0)}
+.fl-input:focus,.fl-select:focus,.fl-textarea:focus{border-color:var(--gold);background:rgba(200,164,74,.06);box-shadow:0 0 0 3px rgba(200,164,74,.12)}
+.fl-input.err,.fl-select.err{border-color:var(--red);box-shadow:0 0 0 3px rgba(224,82,82,.12)}
+.fl-input::placeholder{color:transparent}
+.fl-select{background-image:url("data:image/svg+xml,%3Csvg width='12' height='7' viewBox='0 0 12 7' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23C8A44A' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:38px;cursor:pointer}
+.fl-select option{background:var(--deep);color:var(--white)}
+.fl-textarea{padding:18px 16px 12px;resize:none;height:88px;line-height:1.55}
+.fl-textarea-label{position:absolute;top:14px;left:16px;font-size:14px;color:var(--muted);font-weight:400;pointer-events:none;transition:all .2s cubic-bezier(.4,0,.2,1)}
+.fl-textarea:focus~.fl-textarea-label,.fl-textarea.has-val~.fl-textarea-label{top:6px;font-size:10px;font-weight:600;color:var(--gold);letter-spacing:.3px;text-transform:uppercase}
+.err-txt{font-size:11px;color:var(--red);margin-top:5px;display:none}
+.err-txt.on{display:block}
+
+.svc-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.svc-item{position:relative}
+.svc-item input{position:absolute;opacity:0;width:0;height:0}
+.svc-item label{display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.1);border-radius:11px;padding:11px 12px;cursor:pointer;font-size:12.5px;font-weight:500;color:var(--muted);transition:all .2s;line-height:1.3;user-select:none}
+.svc-item label::before{content:'';width:16px;height:16px;border-radius:5px;border:1.5px solid rgba(255,255,255,.2);background:transparent;flex-shrink:0;transition:all .2s}
+.svc-item input:checked+label{background:rgba(200,164,74,.12);border-color:var(--gold);color:var(--white)}
+.svc-item input:checked+label::before{background:var(--gold);border-color:var(--gold);background-image:url("data:image/svg+xml,%3Csvg width='10' height='8' viewBox='0 0 10 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4L4 7L9 1' stroke='%2308111F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center}
+.err-svc{font-size:11px;color:var(--red);margin-top:8px;display:none}
+.err-svc.on{display:block}
+
+.nav{display:flex;gap:10px;margin-top:22px}
+.btn-back{width:48px;height:48px;border-radius:13px;flex-shrink:0;background:var(--faint);border:1px solid rgba(255,255,255,.12);color:var(--muted);cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.btn-back:hover{background:rgba(255,255,255,.1);color:var(--white)}
+.btn-next{flex:1;height:48px;border-radius:13px;background:linear-gradient(135deg,var(--gold2),var(--gold),var(--gold3));border:none;color:var(--ink);font-family:var(--sans);font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 6px 22px rgba(200,164,74,.35);transition:transform .15s,box-shadow .15s;position:relative;overflow:hidden}
+.btn-next:active{transform:scale(.97)}
+
+.divider{display:flex;align-items:center;gap:10px;margin:14px 0}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.08)}
+.divider span{font-size:11px;color:var(--muted);white-space:nowrap}
+
+.result-card{background:linear-gradient(145deg,rgba(18,160,92,.12),rgba(26,50,84,.9));border:1px solid rgba(18,160,92,.35);border-radius:24px;padding:26px 22px;box-shadow:0 24px 60px rgba(0,0,0,.4),0 0 40px rgba(18,160,92,.08);animation:stepIn .4s ease both}
+.result-header{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+.result-icon{width:52px;height:52px;border-radius:15px;flex-shrink:0;background:linear-gradient(135deg,var(--green),#0D6B3E);display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 8px 24px rgba(18,160,92,.4)}
+.result-header h2{font-family:var(--serif);font-size:22px;font-weight:600}
+.result-header p{font-size:13px;color:var(--muted);margin-top:2px}
+.result-box{background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:16px;font-size:13px;line-height:1.85;color:rgba(255,255,255,.75);white-space:pre-wrap;font-family:var(--sans);margin-bottom:14px;user-select:all}
+.result-actions{display:flex;flex-direction:column;gap:9px}
+.btn-copy{width:100%;height:48px;border-radius:13px;background:linear-gradient(135deg,var(--gold2),var(--gold),var(--gold3));border:none;color:var(--ink);font-family:var(--sans);font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 6px 22px rgba(200,164,74,.35);transition:all .2s}
+.btn-copy.done{background:linear-gradient(135deg,#16C76E,var(--green));color:white;box-shadow:0 6px 22px rgba(18,160,92,.4)}
+.btn-viber{width:100%;height:48px;border-radius:13px;background:rgba(115,96,242,.18);border:1.5px solid rgba(115,96,242,.4);color:#A99FFF;font-family:var(--sans);font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:7px;transition:all .2s}
+.btn-restart{width:100%;height:44px;border-radius:12px;background:none;border:1px solid rgba(255,255,255,.1);color:var(--muted);font-family:var(--sans);font-size:13px;cursor:pointer;transition:all .2s}
+.foot{text-align:center;padding:28px 0 0;font-size:11px;color:rgba(255,255,255,.22);line-height:1.8}
+.foot strong{color:rgba(255,255,255,.35)}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="bg-grid"></div>
+<div class="wrap">
+
+<div class="hero">
+  <div class="logo-ring">&#127981;</div>
+  <div class="hero-tag">&#10022; Партнерська програма</div>
+  <h1>Станьте частиною<br/><em>КомпасБуд</em></h1>
+  <p>Тисячi людей щороку шукають перевiрених фахiвцiв з нерухомостi та будiвництва. Вашi клiєнти вже тут.</p>
+  <div class="hero-pills">
+    <div class="pill">&#10003; Безкоштовно</div>
+    <div class="pill">&#10003; Без посередникiв</div>
+    <div class="pill">&#10003; Клiєнти напряму</div>
+  </div>
+</div>
+
+<div class="stepper" id="stepper">
+  <div class="step-item active" data-s="0"><div class="step-circle">1</div><div class="step-label">Про вас</div></div>
+  <div class="step-item" data-s="1"><div class="step-circle">2</div><div class="step-label">Регiон</div></div>
+  <div class="step-item" data-s="2"><div class="step-circle">3</div><div class="step-label">Контакти</div></div>
+  <div class="step-item" data-s="3"><div class="step-circle">4</div><div class="step-label">Послуги</div></div>
+  <div class="step-item" data-s="4"><div class="step-circle">5</div><div class="step-label">Готово</div></div>
+</div>
+
+<!-- STEP 1 -->
+<div class="card" id="s1">
+  <div class="card-num">Крок 1 з 4</div>
+  <div class="card-head"><h2>Розкажiть про себе</h2><p>Назва вашої компанiї та напрямок роботи</p></div>
+  <div class="field">
+    <div class="fl-wrap">
+      <input class="fl-input" id="name" type="text" placeholder=" " autocomplete="organization"/>
+      <label class="fl-label" for="name">Назва компанii або ПIБ *</label>
+    </div>
+    <div class="err-txt" id="e-name">Будь ласка, введiть назву</div>
+  </div>
+  <div class="field">
+    <div class="fl-wrap">
+      <select class="fl-select" id="type">
+        <option value="" disabled selected></option>
+        <option value="Геодезiя / Землеустрiй">Геодезiя / Землеустрiй</option>
+        <option value="БТI / Технiчна iнвентаризацiя">БТI / Технiчна iнвентаризацiя</option>
+        <option value="Архiтектура / Проектування">Архiтектура / Проектування</option>
+        <option value="Юридичнi послуги">Юридичнi послуги (нерухомiсть, земля)</option>
+        <option value="Будiвництво / Бригада пiдрядникiв">Будiвництво / Бригада пiдрядникiв</option>
+        <option value="Комунiкацiї (електрика, газ, вода)">Комунiкацiї (електрика, газ, вода)</option>
+        <option value="Геологiя / Дослiдження грунтiв">Геологiя / Дослiдження грунтiв</option>
+        <option value="Кiлька напрямкiв">Кiлька напрямкiв</option>
+      </select>
+      <label class="fl-label" for="type">Напрямок роботи *</label>
+    </div>
+    <div class="err-txt" id="e-type">Будь ласка, оберiть напрямок</div>
+  </div>
+  <div class="nav"><button class="btn-next" onclick="go(1)">Далi &#8594;</button></div>
+</div>
+
+<!-- STEP 2 -->
+<div class="card hidden" id="s2">
+  <div class="card-num">Крок 2 з 4</div>
+  <div class="card-head"><h2>Де ви працюєте?</h2><p>Вашi клiєнти знайдуть вас за регiоном</p></div>
+  <div class="field">
+    <div class="fl-wrap">
+      <select class="fl-select" id="region">
+        <option value="" disabled selected></option>
+        <option value="Вся Украiна">Вся Украiна</option>
+        <option value="Киiв">Киiв</option>
+        <option value="Киiвська область">Киiвська область</option>
+        <option value="Харкiв / Харкiвська область">Харкiв / Харкiвська область</option>
+        <option value="Полтава / Полтавська область">Полтава / Полтавська область</option>
+        <option value="Львiв / Львiвська область">Львiв / Львiвська область</option>
+        <option value="Днiпро / Днiпропетровська область">Днiпро / Днiпропетровська область</option>
+        <option value="Одеса / Одеська область">Одеса / Одеська область</option>
+        <option value="Запорiжжя / Запорiзька область">Запорiжжя / Запорiзька область</option>
+        <option value="Iнший регiон">Iнший регiон</option>
+      </select>
+      <label class="fl-label" for="region">Регiон / Область *</label>
+    </div>
+    <div class="err-txt" id="e-region">Будь ласка, оберiть регiон</div>
+  </div>
+  <div class="field">
+    <div class="fl-wrap">
+      <input class="fl-input" id="cities" type="text" placeholder=" "/>
+      <label class="fl-label" for="cities">Мiста (через кому)</label>
+    </div>
+  </div>
+  <div class="nav">
+    <button class="btn-back" onclick="go(-1)">&#8592;</button>
+    <button class="btn-next" onclick="go(1)">Далi &#8594;</button>
+  </div>
+</div>
+
+<!-- STEP 3 -->
+<div class="card hidden" id="s3">
+  <div class="card-num">Крок 3 з 4</div>
+  <div class="card-head"><h2>Контактна iнформацiя</h2><p>Як клiєнт зможе з вами зв'язатися</p></div>
+  <div class="field">
+    <div class="fl-wrap">
+      <input class="fl-input" id="phone1" type="tel" placeholder=" " autocomplete="tel"/>
+      <label class="fl-label" for="phone1">Телефон *</label>
+    </div>
+    <div class="err-txt" id="e-phone1">Будь ласка, введiть телефон</div>
+  </div>
+  <div class="field">
+    <div class="fl-wrap">
+      <input class="fl-input" id="phone2" type="tel" placeholder=" "/>
+      <label class="fl-label" for="phone2">Телефон 2 (якщо є)</label>
+    </div>
+  </div>
+  <div class="divider"><span>необов'язково</span></div>
+  <div class="field">
+    <div class="fl-wrap">
+      <input class="fl-input" id="website" type="text" placeholder=" "/>
+      <label class="fl-label" for="website">Сайт (наприклад: mysite.ua)</label>
+    </div>
+  </div>
+  <div class="field">
+    <div class="fl-wrap">
+      <input class="fl-input" id="address" type="text" placeholder=" "/>
+      <label class="fl-label" for="address">Адреса офiсу</label>
+    </div>
+  </div>
+  <div class="field">
+    <div class="fl-wrap">
+      <input class="fl-input" id="hours" type="text" placeholder=" "/>
+      <label class="fl-label" for="hours">Режим роботи</label>
+    </div>
+  </div>
+  <div class="nav">
+    <button class="btn-back" onclick="go(-1)">&#8592;</button>
+    <button class="btn-next" onclick="go(1)">Далi &#8594;</button>
+  </div>
+</div>
+
+<!-- STEP 4 -->
+<div class="card hidden" id="s4">
+  <div class="card-num">Крок 4 з 4</div>
+  <div class="card-head"><h2>Вашi послуги</h2><p>Оберiть все що ви робите</p></div>
+  <div class="svc-grid">
+    <div class="svc-item"><input type="checkbox" id="s_tp" value="Технiчний паспорт"/><label for="s_tp">Технiчний паспорт</label></div>
+    <div class="svc-item"><input type="checkbox" id="s_ve" value="Введення в експлуатацiю"/><label for="s_ve">Введення в експлуатацiю</label></div>
+    <div class="svc-item"><input type="checkbox" id="s_db" value="Дозвiл на будiвництво"/><label for="s_db">Дозвiл на будiвництво</label></div>
+    <div class="svc-item"><input type="checkbox" id="s_uz" value="Узаконення самобуду"/><label for="s_uz">Узаконення самобуду</label></div>
+    <div class="svc-item"><input type="checkbox" id="s_ge" value="Геодезiя / межi дiлянки"/><label for="s_ge">Геодезiя / межi</label></div>
+    <div class="svc-item"><input type="checkbox" id="s_zl" value="Землеустрiй"/><label for="s_zl">Землеустрiй</label></div>
+    <div class="svc-item"><input type="checkbox" id="s_ap" value="Архiтектурний проект"/><label for="s_ap">Архiтектурний проект</label></div>
+    <div class="svc-item"><input type="checkbox" id="s_pp" value="Перепланування"/><label for="s_pp">Перепланування</label></div>
+    <div class="svc-item"><input type="checkbox" id="s_rk" value="Реконструкцiя"/><label for="s_rk">Реконструкцiя</label></div>
+    <div class="svc-item"><input type="checkbox" id="s_oc" value="Оцiнка майна"/><label for="s_oc">Оцiнка майна</label></div>
+    <div class="svc-item"><input type="checkbox" id="s_rp" value="Реєстрацiя права власностi"/><label for="s_rp">Реєстрацiя права</label></div>
+    <div class="svc-item"><input type="checkbox" id="s_yur" value="Юридична консультацiя"/><label for="s_yur">Юридична консультацiя</label></div>
+  </div>
+  <div class="err-svc" id="e-svc">Оберiть хоча б одну послугу</div>
+  <div style="margin-top:14px">
+    <div class="fl-wrap">
+      <textarea class="fl-textarea" id="extra" placeholder=" "></textarea>
+      <label class="fl-textarea-label">Iншi послуги (необов'язково)</label>
+    </div>
+  </div>
+  <div class="nav">
+    <button class="btn-back" onclick="go(-1)">&#8592;</button>
+    <button class="btn-next" onclick="finish()">Сформувати анкету &#10003;</button>
+  </div>
+</div>
+
+<!-- RESULT -->
+<div class="result-card hidden" id="sResult">
+  <div class="result-header">
+    <div class="result-icon">&#10003;</div>
+    <div><h2>Анкету готово!</h2><p>Скопiюйте i надiшлiть Вiталiю</p></div>
+  </div>
+  <div class="result-box" id="rText"></div>
+  <div class="result-actions">
+    <button class="btn-copy" id="btnCopy" onclick="copyIt()">Копiювати текст</button>
+    <button class="btn-viber" onclick="viberIt()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.5 0 .3 5 .1 11.5c-.1 3.6 1.4 7 4 9.4V24l3.8-2c1.3.4 2.7.6 4.1.6 6.5 0 11.8-5 12-11.5C24.1 5 18.6 0 12 0zm5.9 16.4c-.3.8-1.5 1.5-2.5 1.7-.7.1-1.5.2-4.9-1.1-4.1-1.5-6.7-5.7-6.9-6s-.8-1.2-.8-2.3.6-1.6 1-2 .8-.4 1.1-.4h.8c.3 0 .6.1.9.7l1.2 2.8c.1.3.2.6 0 1-.2.4-.3.6-.6.9l-.6.6c.2.4.9 1.5 1.8 2.3 1.1.9 2.1 1.3 2.4 1.4l.7-.8c.3-.4.6-.5.9-.4l2.8 1.3c.6.3.6.7.7 1 .1.5-.1 1.1-.1 1.1v.2z"/></svg>
+      Надiслати у Viber
+    </button>
+    <button class="btn-restart" onclick="restart()">&#8592; Заповнити знову</button>
+  </div>
+</div>
+
+<div class="foot"><strong>КомпасБуд</strong> &mdash; навiгатор будiвництва та узаконення<br/>Iнформацiйний продукт &bull; Не є юридичною консультацiєю</div>
+</div>
+
+<script>
+let cur=0;
+const STEPS=['s1','s2','s3','s4','sResult'];
+
+function show(n){
+  STEPS.forEach((id,i)=>{
+    const el=document.getElementById(id);
+    if(i===n)el.classList.remove('hidden');
+    else el.classList.add('hidden');
+  });
+  document.querySelectorAll('.step-item').forEach((el,i)=>{
+    el.classList.remove('active','done');
+    if(n<4){
+      if(i<n)el.classList.add('done');
+      if(i===n)el.classList.add('active');
+    } else {
+      if(i<=3)el.classList.add('done');
+      if(i===4)el.classList.add('active');
+    }
+  });
+  document.querySelectorAll('.step-item').forEach((el,i)=>{
+    const sc=el.querySelector('.step-circle');
+    if(el.classList.contains('done'))sc.innerHTML='&#10003;';
+    else sc.textContent=i+1;
+  });
+  cur=n;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function val(id){const el=document.getElementById(id);return el?el.value.trim():''}
+
+function reqCheck(fId,eId){
+  const v=val(fId);
+  const el=document.getElementById(fId);
+  const er=document.getElementById(eId);
+  if(!v){el&&el.classList.add('err');er&&er.classList.add('on');return false;}
+  el&&el.classList.remove('err');er&&er.classList.remove('on');return true;
+}
+
+function go(dir){
+  const next=cur+dir;
+  if(dir>0){
+    if(cur===0){const a=reqCheck('name','e-name');const b=reqCheck('type','e-type');if(!a||!b)return;}
+    if(cur===1){if(!reqCheck('region','e-region'))return;}
+    if(cur===2){if(!reqCheck('phone1','e-phone1'))return;}
+  }
+  show(next);
+}
+
+document.querySelectorAll('.fl-select').forEach(sel=>{
+  sel.addEventListener('change',()=>{if(sel.value)sel.classList.add('has-value');else sel.classList.remove('has-value');});
+});
+document.querySelectorAll('.fl-textarea').forEach(ta=>{
+  ta.addEventListener('input',()=>{if(ta.value.trim())ta.classList.add('has-val');else ta.classList.remove('has-val');});
+});
+
+function finish(){
+  const checked=[...document.querySelectorAll('.svc-grid input:checked')];
+  const errSvc=document.getElementById('e-svc');
+  if(checked.length===0){errSvc.classList.add('on');return;}
+  errSvc.classList.remove('on');
+  const name=val('name'),type=val('type'),region=val('region'),cities=val('cities');
+  const phone1=val('phone1'),phone2=val('phone2'),website=val('website');
+  const address=val('address'),hours=val('hours'),extra=val('extra');
+  const svcs=checked.map(c=>c.value).join(', ');
+  let t='=== АНКЕТА ВИКОНАВЦЯ - КомпасБуд ===\n\n';
+  t+='-- Основне --\n';
+  t+='Назва: '+name+'\n';
+  t+='Напрямок: '+type+'\n';
+  t+='Регiон: '+region+'\n';
+  if(cities)t+='Мiста: '+cities+'\n';
+  t+='\n-- Контакти --\n';
+  t+='Телефон: '+phone1+'\n';
+  if(phone2)t+='Телефон 2: '+phone2+'\n';
+  if(website)t+='Сайт: '+website+'\n';
+  if(address)t+='Адреса: '+address+'\n';
+  if(hours)t+='Режим: '+hours+'\n';
+  t+='\n-- Послуги --\n'+svcs+'\n';
+  if(extra)t+='Додатково: '+extra+'\n';
+  t+='\n===================================';
+  document.getElementById('rText').textContent=t;
+  show(4);
+}
+
+function copyIt(){
+  const text=document.getElementById('rText').textContent;
+  const btn=document.getElementById('btnCopy');
+  navigator.clipboard.writeText(text).then(()=>{
+    btn.textContent='Скопiйовано ✓';btn.classList.add('done');
+    setTimeout(()=>{btn.textContent='Копiювати текст';btn.classList.remove('done');},2500);
+  }).catch(()=>{
+    const r=document.createRange();r.selectNodeContents(document.getElementById('rText'));
+    window.getSelection().removeAllRanges();window.getSelection().addRange(r);
+    try{document.execCommand('copy');}catch(e){}
+    window.getSelection().removeAllRanges();
+    btn.textContent='Скопiйовано ✓';btn.classList.add('done');
+    setTimeout(()=>{btn.textContent='Копiювати текст';btn.classList.remove('done');},2500);
+  });
+}
+function viberIt(){window.location.href='viber://forward?text='+encodeURIComponent(document.getElementById('rText').textContent);}
+function restart(){
+  document.querySelectorAll('input[type="text"],input[type="tel"],textarea').forEach(el=>{el.value='';el.classList.remove('err','has-val');});
+  document.querySelectorAll('select').forEach(el=>{el.value='';el.classList.remove('err','has-value');});
+  document.querySelectorAll('input[type="checkbox"]').forEach(el=>el.checked=false);
+  document.querySelectorAll('.err-txt,.err-svc').forEach(el=>el.classList.remove('on'));
+  show(0);
+}
+show(0);
+</script>
+</body>
+</html>
