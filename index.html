@@ -101,8 +101,8 @@ body{font-family:var(--sans);background:var(--ink);color:var(--white);min-height
 .result-actions{display:flex;flex-direction:column;gap:9px}
 .btn-copy{width:100%;height:48px;border-radius:13px;background:linear-gradient(135deg,var(--gold2),var(--gold),var(--gold3));border:none;color:var(--ink);font-family:var(--sans);font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 6px 22px rgba(200,164,74,.35);transition:all .2s}
 .btn-copy.done{background:linear-gradient(135deg,#16C76E,var(--green));color:white;box-shadow:0 6px 22px rgba(18,160,92,.4)}
-.btn-viber{width:100%;height:48px;border-radius:13px;background:rgba(115,96,242,.18);border:1.5px solid rgba(115,96,242,.4);color:#A99FFF;font-family:var(--sans);font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:7px;transition:all .2s}
-.btn-restart{width:100%;height:44px;border-radius:12px;background:none;border:1px solid rgba(255,255,255,.1);color:var(--muted);font-family:var(--sans);font-size:13px;cursor:pointer;transition:all .2s}
+.btn-restart{width:100%;height:48px;border-radius:13px;background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.15);color:var(--muted);font-family:var(--sans);font-size:14px;font-weight:600;cursor:pointer;transition:all .2s}
+.btn-restart:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.25);color:var(--white)}
 .foot{text-align:center;padding:28px 0 0;font-size:11px;color:rgba(255,255,255,.22);line-height:1.8}
 .foot strong{color:rgba(255,255,255,.35)}
 .hidden{display:none!important}
@@ -276,16 +276,12 @@ body{font-family:var(--sans);background:var(--ink);color:var(--white);min-height
 <div class="result-card hidden" id="sResult">
   <div class="result-header">
     <div class="result-icon">&#10003;</div>
-    <div><h2>Анкету готово!</h2><p>Скопiюйте i надiшлiть Вiталiю</p></div>
+    <div><h2>Дані відправлено!</h2><p>Інформацію додано в базу виконавців</p></div>
   </div>
   <div class="result-box" id="rText"></div>
   <div class="result-actions">
-    <button class="btn-copy" id="btnCopy" onclick="copyIt()">Копiювати текст</button>
-    <button class="btn-viber" onclick="viberIt()">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.5 0 .3 5 .1 11.5c-.1 3.6 1.4 7 4 9.4V24l3.8-2c1.3.4 2.7.6 4.1.6 6.5 0 11.8-5 12-11.5C24.1 5 18.6 0 12 0zm5.9 16.4c-.3.8-1.5 1.5-2.5 1.7-.7.1-1.5.2-4.9-1.1-4.1-1.5-6.7-5.7-6.9-6s-.8-1.2-.8-2.3.6-1.6 1-2 .8-.4 1.1-.4h.8c.3 0 .6.1.9.7l1.2 2.8c.1.3.2.6 0 1-.2.4-.3.6-.6.9l-.6.6c.2.4.9 1.5 1.8 2.3 1.1.9 2.1 1.3 2.4 1.4l.7-.8c.3-.4.6-.5.9-.4l2.8 1.3c.6.3.6.7.7 1 .1.5-.1 1.1-.1 1.1v.2z"/></svg>
-      Надiслати у Viber
-    </button>
-    <button class="btn-restart" onclick="restart()">&#8592; Заповнити знову</button>
+    <button class="btn-copy" id="btnCopy" onclick="copyIt()">📋 Копіювати текст (резервна копія)</button>
+    <button class="btn-restart" onclick="restart()">&#8592; Додати ще одного виконавця</button>
   </div>
 </div>
 
@@ -347,51 +343,95 @@ document.querySelectorAll('.fl-select').forEach(sel=>{
 document.querySelectorAll('.fl-textarea').forEach(ta=>{
   ta.addEventListener('input',()=>{if(ta.value.trim())ta.classList.add('has-val');else ta.classList.remove('has-val');});
 });
-const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzdhI8AFY4P3jCNm8qfzjvUVW9mILfhJCpUnT5eSORinSVicUhRL7DpS7djvmsYjhEm/exec";
+
 function finish(){
   const checked=[...document.querySelectorAll('.svc-grid input:checked')];
   const errSvc=document.getElementById('e-svc');
   if(checked.length===0){errSvc.classList.add('on');return;}
   errSvc.classList.remove('on');
+  
   const name=val('name'),type=val('type'),region=val('region'),cities=val('cities');
   const phone1=val('phone1'),phone2=val('phone2'),website=val('website');
   const address=val('address'),hours=val('hours'),extra=val('extra');
   const svcs=checked.map(c=>c.value).join(', ');
-  let t='=== АНКЕТА ВИКОНАВЦЯ - КомпасБуд ===\n\n';
-  t+='-- Основне --\n';
-  t+='Назва: '+name+'\n';
-  t+='Напрямок: '+type+'\n';
-  t+='Регiон: '+region+'\n';
-  if(cities)t+='Мiста: '+cities+'\n';
-  t+='\n-- Контакти --\n';
-  t+='Телефон: '+phone1+'\n';
-  if(phone2)t+='Телефон 2: '+phone2+'\n';
-  if(website)t+='Сайт: '+website+'\n';
-  if(address)t+='Адреса: '+address+'\n';
-  if(hours)t+='Режим: '+hours+'\n';
-  t+='\n-- Послуги --\n'+svcs+'\n';
-  if(extra)t+='Додатково: '+extra+'\n';
-  t+='\n===================================';
-  document.getElementById('rText').textContent=t;
-  show(4);
+  
+  // Формуємо description
+  let desc='';
+  if(cities)desc+='Міста: '+cities+'\n';
+  if(phone2)desc+='Тел 2: '+phone2+'\n';
+  if(website)desc+='Сайт: '+website+'\n';
+  if(address)desc+='Адреса: '+address+'\n';
+  if(hours)desc+='Режим: '+hours+'\n';
+  if(extra)desc+='Додатково: '+extra;
+  
+  // Відправка на Apps Script
+  const payload={
+    name:name,
+    category:type,
+    region:region,
+    phone:phone1,
+    tags:svcs,
+    description:desc.trim(),
+    rating:'',
+    recommend:'',
+    success:'',
+    price:'',
+    verified:'',
+    status:'Новий'
+  };
+  
+  const btn=document.querySelector('#s4 .btn-next');
+  btn.textContent='Відправка...';
+  btn.disabled=true;
+  
+  fetch('https://script.google.com/macros/s/AKfycbzdhI8AFY4P3jCNm8qfzjvUVW9mILfhJCpUnT5eSORinSVicUhRL7DpS7djvmsYjhEm/exec',{
+    method:'POST',
+    mode:'no-cors',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(payload)
+  })
+  .then(()=>{
+    let t='=== АНКЕТА ВИКОНАВЦЯ - КомпасБуд ===\n\n';
+    t+='-- Основне --\n';
+    t+='Назва: '+name+'\n';
+    t+='Напрямок: '+type+'\n';
+    t+='Регiон: '+region+'\n';
+    if(cities)t+='Мiста: '+cities+'\n';
+    t+='\n-- Контакти --\n';
+    t+='Телефон: '+phone1+'\n';
+    if(phone2)t+='Телефон 2: '+phone2+'\n';
+    if(website)t+='Сайт: '+website+'\n';
+    if(address)t+='Адреса: '+address+'\n';
+    if(hours)t+='Режим: '+hours+'\n';
+    t+='\n-- Послуги --\n'+svcs+'\n';
+    if(extra)t+='Додатково: '+extra+'\n';
+    t+='\n✅ Дані успішно відправлено!';
+    document.getElementById('rText').textContent=t;
+    show(4);
+  })
+  .catch(err=>{
+    alert('Помилка відправки. Спробуйте ще раз.');
+    btn.textContent='Сформувати анкету ✓';
+    btn.disabled=false;
+  });
 }
 
 function copyIt(){
   const text=document.getElementById('rText').textContent;
   const btn=document.getElementById('btnCopy');
   navigator.clipboard.writeText(text).then(()=>{
-    btn.textContent='Скопiйовано ✓';btn.classList.add('done');
-    setTimeout(()=>{btn.textContent='Копiювати текст';btn.classList.remove('done');},2500);
+    btn.textContent='✓ Скопійовано';btn.classList.add('done');
+    setTimeout(()=>{btn.textContent='📋 Копіювати текст (резервна копія)';btn.classList.remove('done');},2500);
   }).catch(()=>{
     const r=document.createRange();r.selectNodeContents(document.getElementById('rText'));
     window.getSelection().removeAllRanges();window.getSelection().addRange(r);
     try{document.execCommand('copy');}catch(e){}
     window.getSelection().removeAllRanges();
-    btn.textContent='Скопiйовано ✓';btn.classList.add('done');
-    setTimeout(()=>{btn.textContent='Копiювати текст';btn.classList.remove('done');},2500);
+    btn.textContent='✓ Скопійовано';btn.classList.add('done');
+    setTimeout(()=>{btn.textContent='📋 Копіювати текст (резервна копія)';btn.classList.remove('done');},2500);
   });
 }
-function viberIt(){window.location.href='viber://forward?text='+encodeURIComponent(document.getElementById('rText').textContent);}
+
 function restart(){
   document.querySelectorAll('input[type="text"],input[type="tel"],textarea').forEach(el=>{el.value='';el.classList.remove('err','has-val');});
   document.querySelectorAll('select').forEach(el=>{el.value='';el.classList.remove('err','has-value');});
